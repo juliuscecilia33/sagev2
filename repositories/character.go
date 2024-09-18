@@ -18,12 +18,12 @@ func (r *CharacterRepository) GetOne(ctx context.Context, characterId string) (*
 	return nil, nil
 }
 
-func (r *CharacterRepository) CreateOne(ctx context.Context, characterId string) (*models.Character, error) {
+func (r *CharacterRepository) CreateOne(ctx context.Context, character models.Character) (*models.Character, error) {
 	return nil, nil
 }
 
 func NewCharacterRepository(db any) models.CharacterRepository {
-	return &CharacterRepository(
+	return &CharacterRepository{
 		db: db,
-	)
+	}
 }
