@@ -10,9 +10,9 @@ type Character struct {
 	ID string
 	Name string
 	Description string
-	Fruit_Multipliers []string
-	Level_Images []string
-	createdAt time.Time
+	FruitMultipliers map[string]string
+	LevelImages map[string]string
+	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
