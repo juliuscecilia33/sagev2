@@ -10,7 +10,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-func Init(config *config.EnvConfig) *gorm.DB {
+func Init(config *config.EnvConfig, DBMigrator func(db *gorm.DB) error) *gorm.DB {
 	uri := fmt.Sprintf(`
 		host=%s user=%s dbname=%s password=%s sslmode=%s port=5432,`, 
 		config.DBHost, config.DBUser, config.DBName, config.DBPassword, config.DBSSLMode,
@@ -25,6 +25,10 @@ func Init(config *config.EnvConfig) *gorm.DB {
 	}
 
 	log.Info("Connected to the database!")
+
+	if err := DBMigrator(db); err != nil {
+		log.Fatalf("Error running database migrations: %e", err)
+	}
 
 	return db
 }

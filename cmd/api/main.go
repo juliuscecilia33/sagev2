@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/juliuscecilia33/sagev2/config"
 	"github.com/juliuscecilia33/sagev2/db"
@@ -10,7 +12,7 @@ import (
 
 func main() {
 	envConfig := config.NewEnvConfig() // Load config from environment variables
-	db := db.Init(envConfig)
+	db := db.Init(envConfig, db.DBMigrator)
 
 	app := fiber.New(fiber.Config{
 		AppName: "Sage",
@@ -18,7 +20,7 @@ func main() {
 	})
 
 	// Repositories
-	characterRepository := repositories.NewCharacterRepository(nil)
+	characterRepository := repositories.NewCharacterRepository(db)
 
 	// Routing
 	server := app.Group("/api")
@@ -26,5 +28,5 @@ func main() {
 	// Handlers
 	handlers.NewCharacterHandler(server.Group("/character"), characterRepository)
 
-	app.Listen(":3000")
+	app.Listen(fmt.Sprintf(":" + envConfig.ServerPort))
 }
