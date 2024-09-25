@@ -2,8 +2,8 @@ package db
 
 import (
 	"fmt"
+	"log"
 
-	"github.com/gofiber/fiber/v2/log"
 	"github.com/juliuscecilia33/sagev2/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -11,8 +11,8 @@ import (
 )
 
 func Init(config *config.EnvConfig, DBMigrator func(db *gorm.DB) error) *gorm.DB {
-	uri := fmt.Sprintf(`
-		host=%s user=%s dbname=%s password=%s sslmode=%s port=5432,`, 
+	uri := fmt.Sprintf(
+		"host=%s user=%s dbname=%s password=%s sslmode=%s port=5432",
 		config.DBHost, config.DBUser, config.DBName, config.DBPassword, config.DBSSLMode,
 	)
 
@@ -21,13 +21,13 @@ func Init(config *config.EnvConfig, DBMigrator func(db *gorm.DB) error) *gorm.DB
 	})
 
 	if err != nil {
-		log.Fatalf("Unable to connect to the database: %e", err)
+		log.Fatalf("Unable to connect to the database: %v", err)  // Fixing the formatting of the error message
 	}
 
-	log.Info("Connected to the database!")
+	log.Println("Connected to the database!")
 
 	if err := DBMigrator(db); err != nil {
-		log.Fatalf("Error running database migrations: %e", err)
+		log.Fatalf("Error running database migrations: %v", err)  // Fixing the formatting of the error message
 	}
 
 	return db

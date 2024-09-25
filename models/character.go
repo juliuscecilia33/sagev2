@@ -7,13 +7,13 @@ import (
 
 
 type Character struct {
-	ID string
-	Name string
-	Description string
-	FruitMultipliers map[string]string
-	LevelImages map[string]string
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	ID              string            `gorm:"primaryKey"`    // Mark ID as primary key
+	Name            string            `gorm:"type:varchar(255)"`
+	Description     string            `gorm:"type:text"`
+	FruitMultipliers map[string]string `gorm:"type:json"`     // Store map as JSON in DB
+	LevelImages     map[string]string `gorm:"type:json"`     // Store map as JSON in DB
+	CreatedAt       time.Time
+	UpdatedAt       time.Time
 }
 
 type CharacterRepository interface {
