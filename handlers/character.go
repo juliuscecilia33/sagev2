@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"strconv"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -34,11 +35,56 @@ func (h *CharacterHandler) GetMany(ctx *fiber.Ctx) error {
 }
 
 func (h *CharacterHandler) GetOne(ctx *fiber.Ctx) error {
-	return nil
+	characterId, _ := strconv.Atoi(ctx.Params("characterId"))
+
+	context, cancel := context.WithTimeout(context.Background(), time.Duration(5*time.Second))
+	defer cancel()
+
+	character, err := h.repository.GetOne(context, uint(characterId))
+
+	if err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status": "fail",
+			"message": err.Error(),
+		})
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{
+		"status": "success",
+		"message": "",
+		"data": character,
+	})
 }
 
 func (h *CharacterHandler) CreateOne(ctx *fiber.Ctx) error {
-	return nil
+	character := &models.Character{}
+
+	context, cancel := context.WithTimeout(context.Background(), time.Duration(5*time.Second))
+	defer cancel()
+
+	if err := ctx.BodyParser(character); err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status": "fail",
+			"message": err.Error(),
+			"data": nil,
+		})
+	}
+
+	character, err := h.repository.CreateOne(context, character)
+
+	if err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status": "fail",
+			"message": err.Error(),
+		})
+	}
+
+
+	return ctx.Status(fiber.StatusCreated).JSON(&fiber.Map{
+		"status": "success",
+		"message": "Character created",
+		"data": character,
+	})
 }
 
 func NewCharacterHandler(router fiber.Router, repository models.CharacterRepository) {
@@ -49,4 +95,6 @@ func NewCharacterHandler(router fiber.Router, repository models.CharacterReposit
 	router.Get("/", handler.GetMany)
 	router.Post("/", handler.CreateOne)
 	router.Get("/:characterId", handler.GetOne)
+	router.Put("/:characterId", handler.UpdateOne)
+	router.Delete("/:characterId", handler.DeleteOne)
 }
