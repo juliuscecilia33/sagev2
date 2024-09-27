@@ -16,7 +16,7 @@ func (r *CharacterRepository) GetMany(ctx context.Context) ([]*models.Character,
 
 	characters := []*models.Character{}
 
-	res := r.db.Model(&models.Character{}).Find(&characters)
+	res := r.db.Model(&models.Character{}).Order("updated_at desc").Find(&characters)
 
 	if res.Error != nil {
 		return nil, fmt.Errorf("Something went wrong!")

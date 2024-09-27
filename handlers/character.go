@@ -87,6 +87,58 @@ func (h *CharacterHandler) CreateOne(ctx *fiber.Ctx) error {
 	})
 }
 
+func (h *CharacterHandler) UpdateOne(ctx *fiber.Ctx) error {
+	characterId, _ := strconv.Atoi(ctx.Params("characterId"))
+
+	updateData := make(map[string]interface{})
+
+	context, cancel := context.WithTimeout(context.Background(), time.Duration(5*time.Second))
+	defer cancel()
+
+	if err := ctx.BodyParser(&updateData); err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status": "fail",
+			"message": err.Error(),
+			"data": nil,
+		})
+	}
+	
+	character, err := h.repository.UpdateOne(context, uint(characterId), updateData)
+
+	if err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status": "fail",
+			"message": err.Error(),
+		})
+	}
+
+
+	return ctx.Status(fiber.StatusCreated).JSON(&fiber.Map{
+		"status": "success",
+		"message": "Character created",
+		"data": character,
+	})
+
+}
+
+func (h* CharacterHandler) DeleteOne(ctx *fiber.Ctx) error {
+	characterId, _ := strconv.Atoi(ctx.Params("characterId"))
+
+	context, cancel := context.WithTimeout(context.Background(), time.Duration(5*time.Second))
+	defer cancel()
+
+	err := h.repository.DeleteOne(context, uint(characterId))
+
+	if err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status": "fail",
+			"message": err.Error(),
+		})
+	}
+
+	return ctx.SendStatus(fiber.StatusNoContent)
+}
+
 func NewCharacterHandler(router fiber.Router, repository models.CharacterRepository) {
 	handler := &CharacterHandler{
 		repository: repository,
