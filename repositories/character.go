@@ -25,7 +25,7 @@ func (r *CharacterRepository) GetMany(ctx context.Context) ([]*models.Character,
 }
 
 
-func (r *CharacterRepository) GetOne(ctx context.Context, characterId string) (*models.Character, error) {
+func (r *CharacterRepository) GetOne(ctx context.Context, characterId uint) (*models.Character, error) {
 	character := &models.Character{}
 
 	res := r.db.Model(character).Where("id = ?", characterId).First(character)
@@ -63,6 +63,12 @@ func (r *CharacterRepository) UpdateOne(ctx context.Context, characterId uint, u
 	}
 
 	return character, nil
+}
+
+func (r *CharacterRepository) DeleteOne(ctx context.Context, characterId uint) error {
+	res := r.db.Delete(&models.Character{}, characterId)
+
+	return res.Error
 }
 
 func NewCharacterRepository(db *gorm.DB) models.CharacterRepository {
