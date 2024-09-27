@@ -7,7 +7,7 @@ import (
 
 
 type Character struct {
-	ID              uint            	`json:"id" gorm:"primaryKey"`    // Mark ID as primary key
+	ID              uint            	`json:"id" gorm:"primaryKey;autoIncrement"`    // Mark ID as primary key
 	Name            string            	`json:"name" gorm:"type:varchar(255)"`
 	Description     string            	`json:"description" gorm:"type:text"`
 	FruitMultipliers map[string]string 	`json:"fruitMultipliers" gorm:"type:json"`     // Store map as JSON in DB
