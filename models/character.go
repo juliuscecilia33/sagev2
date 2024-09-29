@@ -26,7 +26,7 @@ func (m *JSONMap) Scan(value interface{}) error {
 }
 
 type Character struct {
-	ID              string    `gorm:"primaryKey"`
+	ID              uint      `json:"id" gorm:"primaryKey;autoIncrement"`
 	Name            string    `gorm:"type:varchar(255)"`
 	Description     string    `gorm:"type:text"`
 	FruitMultipliers JSONMap   `gorm:"type:jsonb"` // JSONB for PostgreSQL
