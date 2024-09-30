@@ -1,6 +1,7 @@
 package models
 
 import (
+	"context"
 	"time"
 
 	utils "github.com/juliuscecilia33/sagev2/utility"
@@ -15,5 +16,13 @@ type Item struct {
 	LevelImages			utils.JSONMap `json:"levelImages" gorm:"type:jsonb"`
 	CreatedAt       	time.Time	`json:"createdAt"`
 	UpdatedAt       	time.Time	`json:"udpatedAt"`
+}
+
+// If you want do foreign key, look at ticket.go model
+type ItemRepository interface {
+	GetMany(ctx context.Context) ([]*Item, error)
+	GetOne(ctx context.Context, itemId uint) (*Item, error)
+	CreateOne(ctx context.Context, item *Item) (*Item, error)
+	UpdateOne(ctx context.Context, itemId uint, updateData map[string]interface{}) (*Item, error)
 }
 
