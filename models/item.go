@@ -8,12 +8,12 @@ import (
 
 type Item struct {
 	ID              	uint      `json:"id" gorm:"primaryKey;autoIncrement"`
-	Name            	string    `gorm:"type:varchar(255)"`
-	Description     	string    `gorm:"type:text"`
-	ItemType			string	  `gorm:"type:text"`
-	UnlockConditions	utils.JSONMap `gorm:"type:jsonb"`
-	LevelImages			utils.JSONMap `gorm:"type:jsonb"`
-	CreatedAt       	time.Time
-	UpdatedAt       	time.Time
+	Name            	string    `json:"name" gorm:"type:varchar(255)"`
+	Description     	string    `json:"description" gorm:"type:text"`
+	ItemType			string	  `json:"itemType" gorm:"type:text"`
+	UnlockConditions	utils.JSONMap `json:"unlockConditions" gorm:"type:jsonb"`
+	LevelImages			utils.JSONMap `json:"levelImages" gorm:"type:jsonb"`
+	CreatedAt       	time.Time	`json:"createdAt"`
+	UpdatedAt       	time.Time	`json:"udpatedAt"`
 }
 
