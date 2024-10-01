@@ -63,7 +63,7 @@ func (h *CharacterHandler) CreateOne(ctx *fiber.Ctx) error {
 	defer cancel()
 
 	if err := ctx.BodyParser(character); err != nil {
-		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+		return ctx.Status(fiber.StatusUnprocessableEntity).JSON(&fiber.Map{
 			"status": "fail",
 			"message": err.Error(),
 			"data": nil,

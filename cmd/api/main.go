@@ -21,12 +21,14 @@ func main() {
 
 	// Repositories
 	characterRepository := repositories.NewCharacterRepository(db)
+	itemRepository := repositories.NewItemRepository(db)
 
 	// Routing
 	server := app.Group("/api")
 
 	// Handlers
 	handlers.NewCharacterHandler(server.Group("/character"), characterRepository)
+	handlers.NewItemHandler(server.Group("/item"), itemRepository)
 
 	app.Listen(fmt.Sprintf(":" + envConfig.ServerPort))
 }
