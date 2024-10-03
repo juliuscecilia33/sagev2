@@ -8,6 +8,7 @@ import (
 	"github.com/juliuscecilia33/sagev2/db"
 	"github.com/juliuscecilia33/sagev2/handlers"
 	"github.com/juliuscecilia33/sagev2/repositories"
+	"github.com/juliuscecilia33/sagev2/services"
 )
 
 func main() {
@@ -22,9 +23,16 @@ func main() {
 	// Repositories
 	characterRepository := repositories.NewCharacterRepository(db)
 	itemRepository := repositories.NewItemRepository(db)
+	authRepository := repositories.NewAuthRepository(db)
+
+	// Service
+	authService := services.NewAuthService(authRepository)
 
 	// Routing
 	server := app.Group("/api")
+	handlers.NewAuthHandler(server.Group("/auth"), authService)
+
+	privateRoutes := server.Use(middleware.AuthProtected(db))
 
 	// Handlers
 	handlers.NewCharacterHandler(server.Group("/character"), characterRepository)

@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	utils "github.com/juliuscecilia33/sagev2/utility"
+	utils "github.com/juliuscecilia33/sagev2/utils"
 )
 
 type Item struct {
