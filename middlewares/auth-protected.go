@@ -8,6 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/juliuscecilia33/sagev2/models"
 	"gorm.io/gorm"
 )
 
@@ -56,7 +57,20 @@ func AuthProtected(db *gorm.DB) fiber.Handler {
 			})
 		}
 
-		userId 
+		userId := token.Claims(jwt.MapClaims)["id"]
+
+		if err := db.Model(&models.User{}).Where("id = ?", userId).Error; errors.Is(err, gorm.ErrRecordNotFound) {
+			log.Warnf("user not found in the db")
+
+			return ctx.Status(fiber.StatusUnauthorized).JSON(&fiber.Map{
+				"status": "fail",
+				"message": "Unauthorized",
+			})
+		}
+
+		ctx.Locals("userId", userId)
+
+		return ctx.Next()
 
 	}
 }
