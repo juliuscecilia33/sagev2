@@ -7,6 +7,7 @@ import (
 	"github.com/juliuscecilia33/sagev2/config"
 	"github.com/juliuscecilia33/sagev2/db"
 	"github.com/juliuscecilia33/sagev2/handlers"
+	"github.com/juliuscecilia33/sagev2/middlewares"
 	"github.com/juliuscecilia33/sagev2/repositories"
 	"github.com/juliuscecilia33/sagev2/services"
 )
@@ -32,7 +33,7 @@ func main() {
 	server := app.Group("/api")
 	handlers.NewAuthHandler(server.Group("/auth"), authService)
 
-	privateRoutes := server.Use(middleware.AuthProtected(db))
+	privateRoutes := server.Use(middlewares.AuthProtected(db))
 
 	// Handlers
 	handlers.NewCharacterHandler(server.Group("/character"), characterRepository)
