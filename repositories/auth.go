@@ -12,8 +12,8 @@ type AuthRepository struct {
 }
 
 func (r *AuthRepository) RegisterUser(ctx context.Context, registerData *models.AuthCredentials) (*models.User, error) {
-	user := &models.User {
-		Email: registerData.Email,
+	user := &models.User{
+		Email:    registerData.Email,
 		Password: registerData.Password,
 	}
 
@@ -29,7 +29,7 @@ func (r *AuthRepository) RegisterUser(ctx context.Context, registerData *models.
 func (r *AuthRepository) GetUser(ctx context.Context, query interface{}, args ...interface{}) (*models.User, error) {
 	user := &models.User{}
 
-	if res := r.db.Model(user).Where(query, args).First(user); res.Error != nil {
+	if res := r.db.Model(user).Where(query, args...).First(user); res.Error != nil {
 		return nil, res.Error
 	}
 

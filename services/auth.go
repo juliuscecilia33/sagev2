@@ -33,12 +33,12 @@ func (s *AuthService) Login(ctx context.Context, loginData *models.AuthCredentia
 	}
 
 	claims := jwt.MapClaims{
-		"id": user.ID,
+		"id":   user.ID,
 		"role": user.Role,
-		"exp": time.Now().Add(time.Hour * 168).Unix(), //expiration
+		"exp":  time.Now().Add(time.Hour * 168).Unix(),
 	}
 
-	token, err := utils.GenerateJWT(claims,jwt.SigningMethodHS256, os.Getenv("JWT_SECRET"))
+	token, err := utils.GenerateJWT(claims, jwt.SigningMethodHS256, os.Getenv("JWT_SECRET"))
 
 	if err != nil {
 		return "", nil, err
@@ -47,38 +47,35 @@ func (s *AuthService) Login(ctx context.Context, loginData *models.AuthCredentia
 	return token, user, nil
 }
 
-func (s *AuthService) Register(ctx context.Context, RegisterData *models.AuthCredentials) (string, *models.User, error) {
-	if !models.IsValidEmail(RegisterData.Email) {
-		return "", nil, fmt.Errorf("Please provide a valid email to register")
-	}
-	
-	if _, err := s.repository.GetUser(ctx, "email = ?", RegisterData); !errors.Is(err, gorm.ErrRecordNotFound) {
-		return "", nil, fmt.Errorf("Email already exists")
+func (s *AuthService) Register(ctx context.Context, registerData *models.AuthCredentials) (string, *models.User, error) {
+	if !models.IsValidEmail(registerData.Email) {
+		return "", nil, fmt.Errorf("please, provide a valid email to register")
 	}
 
-	// Hash the password to save into our DB
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(RegisterData.Password), bcrypt.DefaultCost)
+	if _, err := s.repository.GetUser(ctx, "email = ?", registerData.Email); !errors.Is(err, gorm.ErrRecordNotFound) {
+		return "", nil, fmt.Errorf("the user email is already in use")
+	}
 
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(registerData.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return "", nil, err
 	}
 
-	RegisterData.Password = string(hashedPassword)
+	registerData.Password = string(hashedPassword)
 
-	user, err := s.repository.RegisterUser(ctx, RegisterData)
-
+	user, err := s.repository.RegisterUser(ctx, registerData)
 	if err != nil {
 		return "", nil, err
 	}
 
 	claims := jwt.MapClaims{
-		"id": user.ID,
+		"id":   user.ID,
 		"role": user.Role,
-		"exp": time.Now().Add(time.Hour * 168).Unix(), //expiration
+		"exp":  time.Now().Add(time.Hour * 168).Unix(),
 	}
 
-	token, err := utils.GenerateJWT(claims,jwt.SigningMethodHS256, os.Getenv("JWT_SECRET"))
-
+	// Generate the JWT
+	token, err := utils.GenerateJWT(claims, jwt.SigningMethodHS256, os.Getenv("JWT_SECRET"))
 	if err != nil {
 		return "", nil, err
 	}
