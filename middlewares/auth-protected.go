@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"strings"
@@ -57,7 +58,7 @@ func AuthProtected(db *gorm.DB) fiber.Handler {
 			})
 		}
 
-		userId := token.Claims(jwt.MapClaims)["id"]
+		userId := token.Claims.(jwt.MapClaims)["id"]
 
 		if err := db.Model(&models.User{}).Where("id = ?", userId).Error; errors.Is(err, gorm.ErrRecordNotFound) {
 			log.Warnf("user not found in the db")

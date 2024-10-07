@@ -36,8 +36,8 @@ func main() {
 	privateRoutes := server.Use(middlewares.AuthProtected(db))
 
 	// Handlers
-	handlers.NewCharacterHandler(server.Group("/character"), characterRepository)
-	handlers.NewItemHandler(server.Group("/item"), itemRepository)
+	handlers.NewCharacterHandler(privateRoutes.Group("/character"), characterRepository)
+	handlers.NewItemHandler(privateRoutes.Group("/item"), itemRepository)
 
 	app.Listen(fmt.Sprintf(":" + envConfig.ServerPort))
 }
