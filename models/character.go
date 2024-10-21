@@ -11,10 +11,10 @@ type Character struct {
 	ID              uint      `json:"id" gorm:"primaryKey;autoIncrement"`
 	Name            string    `json:"name" gorm:"type:varchar(255)"`
 	Description     string    `json:"description" gorm:"type:text"`
-	FruitMultipliers utils.JSONMap   `json:"fruitMultipliers" gorm:"type:jsonb"` // JSONB for PostgreSQL
-	LevelImages      utils.JSONMap   `json:"levelIMages" gorm:"type:jsonb"` // JSONB for PostgreSQL
-	CreatedAt       time.Time	`json:"createdAt"`
-	UpdatedAt       time.Time	`json:"updatedAt"`
+	FruitMultipliers utils.JSONMap   `json:"fruit_multipliers" gorm:"type:jsonb"` // JSONB for PostgreSQL
+	LevelImages      utils.JSONMap   `json:"level_images" gorm:"type:jsonb"` // JSONB for PostgreSQL
+	CreatedAt       time.Time	`json:"created_at"`
+	UpdatedAt       time.Time	`json:"updated_at"`
 }
 
 type CharacterRepository interface {

@@ -115,7 +115,7 @@ func (h *CharacterHandler) UpdateOne(ctx *fiber.Ctx) error {
 
 	return ctx.Status(fiber.StatusCreated).JSON(&fiber.Map{
 		"status": "success",
-		"message": "Character created",
+		"message": "Character updated",
 		"data": character,
 	})
 

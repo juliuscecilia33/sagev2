@@ -87,6 +87,40 @@ func (h *ItemHandler) CreateOne(ctx *fiber.Ctx) error {
 	})
 }
 
+func (h *ItemHandler ) UpdateOne(ctx *fiber.Ctx) error {
+	itemId, _ := strconv.Atoi(ctx.Params("itemId"))
+
+	updateData := make(map[string]interface{})
+
+	context, cancel := context.WithTimeout(context.Background(), time.Duration(5*time.Second))
+	defer cancel()
+
+	if err := ctx.BodyParser(&updateData); err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status": "fail",
+			"message": err.Error(),
+			"data": nil,
+		})
+	}
+	
+	item, err := h.repository.UpdateOne(context, uint(itemId), updateData)
+
+	if err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status": "fail",
+			"message": err.Error(),
+		})
+	}
+
+
+	return ctx.Status(fiber.StatusCreated).JSON(&fiber.Map{
+		"status": "success",
+		"message": "item updated",
+		"data": item,
+	})
+
+}
+
 // ValidateOne - 1:29:00
 
 func NewItemHandler(router fiber.Router, repository models.ItemRepository) {
@@ -97,4 +131,5 @@ func NewItemHandler(router fiber.Router, repository models.ItemRepository) {
 	router.Get("/", handler.GetMany)
 	router.Post("/", handler.CreateOne)
 	router.Get("/:itemId", handler.GetOne)
+	router.Put("/:itemId", handler.UpdateOne)
 } 

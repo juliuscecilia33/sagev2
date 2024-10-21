@@ -19,8 +19,8 @@ type User struct {
 	Email string `json:"email" gorm:"primarykey"`
 	Role UserRole `json:"role" gorm:"text;default:player"`
 	Password string `json:"-"` // Do not compute the password in json
-	CreatedAt time.Time	`json:"createdAt"`
-	UpdatedAt time.Time	`json:"udpatedAt"`
+	CreatedAt time.Time	`json:"created_at"`
+	UpdatedAt time.Time	`json:"udpated_at"`
 }
 
 func (u *User) AfterCreate(db *gorm.DB) (err error) {
