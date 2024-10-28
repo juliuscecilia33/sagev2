@@ -10,8 +10,6 @@ import (
 type AuthCredentials struct {
 	Email string `json:"email" validate:"required"`
 	Password string `json:"password" validate:"required"`
-	Username string `json:"username" validate:"required"`
-	Name	string	`json:"name" validate:"required"`
 }
 
 type AuthRepository interface {
