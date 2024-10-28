@@ -26,7 +26,7 @@ func (r *ItemRepository) GetMany(ctx context.Context) ([]*models.Item, error) {
 func (r *ItemRepository) GetOne(ctx context.Context, itemId uint) (*models.Item, error) {
 	item := &models.Item{}
 
-	res := r.db.Model(item).First(item)
+	res := r.db.Model(item).Where("id = ?", itemId).First(item)
 
 	if res.Error != nil {
 		return nil, res.Error

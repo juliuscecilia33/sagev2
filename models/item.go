@@ -18,7 +18,6 @@ type Item struct {
 	UpdatedAt       	time.Time	`json:"udpated_at"`
 }
 
-// If you want do foreign key, look at ticket.go model
 type ItemRepository interface {
 	GetMany(ctx context.Context) ([]*Item, error)
 	GetOne(ctx context.Context, itemId uint) (*Item, error)
