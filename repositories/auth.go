@@ -14,6 +14,8 @@ type AuthRepository struct {
 func (r *AuthRepository) RegisterUser(ctx context.Context, registerData *models.AuthCredentials) (*models.User, error) {
 	user := &models.User{
 		Email:    registerData.Email,
+		Name:		registerData.Name,
+		Username:	registerData.Username,
 		Password: registerData.Password,
 	}
 
