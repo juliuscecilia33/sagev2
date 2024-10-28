@@ -6,5 +6,13 @@ import (
 )
 
 func DBMigrator(db *gorm.DB) error {
-	return db.AutoMigrate(&models.Character{}, &models.Item{}, &models.User{})
+	models := []interface{}{
+		&models.Character{},
+		&models.Item{},
+		&models.User{},
+		&models.UserKid{},
+		// Add more models here
+	}
+
+	return db.AutoMigrate(models...)
 }

@@ -16,7 +16,7 @@ const (
 
 type User struct {
 	ID uint `json:"id" gorm:"primarykey"`
-	Email string `json:"email" gorm:"primarykey"`
+	Email string `json:"email" gorm:"unique"`
 	Role UserRole `json:"role" gorm:"text;default:player"`
 	Password string `json:"-"` // Do not compute the password in json
 	CreatedAt time.Time	`json:"created_at"`
