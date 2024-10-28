@@ -29,7 +29,7 @@ func (h *ItemHandler) GetMany(ctx *fiber.Ctx) error {
 
 	return ctx.Status(fiber.StatusOK). JSON(&fiber.Map{
 		"status": "success",
-		"message": "",
+		"message": "retrieved all items",
 		"data": items,
 	})
 }
@@ -51,7 +51,7 @@ func (h *ItemHandler) GetOne(ctx *fiber.Ctx) error {
 
 	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{
 		"status": "success",
-		"message": "",
+		"message": "retrieved item",
 		"data": item,
 	})
 }
@@ -82,7 +82,7 @@ func (h *ItemHandler) CreateOne(ctx *fiber.Ctx) error {
 
 	return ctx.Status(fiber.StatusCreated).JSON(&fiber.Map{
 		"status": "success",
-		"message": "",
+		"message": "created item",
 		"data": item,
 	})
 }

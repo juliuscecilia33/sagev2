@@ -24,4 +24,5 @@ type UserKidRepository interface {
 	GetOne(ctx context.Context, userKidId uint) (*UserKid, error)
 	CreateOne(ctx context.Context, userKid *UserKid) (*UserKid, error)
 	UpdateOne(ctx context.Context, userKidId uint, updateData map[string]interface{}) (*UserKid, error)
+	DeleteOne(ctx context.Context, userKidId uint) error
 }

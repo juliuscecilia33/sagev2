@@ -63,6 +63,13 @@ func (r *UserKidRepository) UpdateOne(ctx context.Context, userKidId uint, updat
 	return kid, nil
 }
 
+func (r *UserKidRepository) DeleteOne(ctx context.Context, userKidId uint) error {
+	res := r.db.Delete(&models.UserKid{}, userKidId)
+
+	return res.Error
+}
+
+
 func NewUserKidRepository(db *gorm.DB) models.UserKidRepository {
 	return &UserKidRepository{
 		db: db,
