@@ -1,3 +1,14 @@
 TODO:
 - Kid Table
-- 
+- Quizzes Table
+- Rewards Table
+- Daily_Quests Table
+- User_quizzes Table
+- User_rewards Table
+- User_Daily_quests table
+- User_character table
+- User_Character_Fruit Table
+- Enemy Table
+- Activity Table
+- Kid_Activity Table (For Parents)
+- User_Bible_Progress
