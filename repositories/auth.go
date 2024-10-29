@@ -15,6 +15,8 @@ func (r *AuthRepository) RegisterUser(ctx context.Context, registerData *models.
 	user := &models.User{
 		Email:    registerData.Email,
 		Password: registerData.Password,
+		Name: registerData.Name,
+		Username: registerData.Username,
 	}
 
 	res := r.db.Model(&models.User{}).Create(user)
