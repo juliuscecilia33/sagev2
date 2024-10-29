@@ -36,10 +36,14 @@ func (r *UserKidRepository) GetOne(ctx context.Context, userKidId uint) (*models
 }
 
 func (r *UserKidRepository) CreateOne(ctx context.Context, kid *models.UserKid) (*models.UserKid, error) {
-	res := r.db.Model(kid).Create(kid)
-
+		res := r.db.Create(kid)
 	if res.Error != nil {
 		return nil, res.Error
+	}
+
+	// Load the User and Parent details after creation
+	if err := r.db.Preload("User").Preload("Parent").First(kid, kid.ID).Error; err != nil {
+		return nil, err
 	}
 
 	return kid, nil
