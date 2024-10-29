@@ -3,6 +3,7 @@ package repositories
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/juliuscecilia33/sagev2/models"
 	"gorm.io/gorm"
 )
@@ -23,7 +24,7 @@ func (r *ItemRepository) GetMany(ctx context.Context) ([]*models.Item, error) {
 	return items, nil
 }
 
-func (r *ItemRepository) GetOne(ctx context.Context, itemId uint) (*models.Item, error) {
+func (r *ItemRepository) GetOne(ctx context.Context, itemId uuid.UUID) (*models.Item, error) {
 	item := &models.Item{}
 
 	res := r.db.Model(item).Where("id = ?", itemId).First(item)
@@ -45,7 +46,7 @@ func (r *ItemRepository) CreateOne(ctx context.Context, item *models.Item) (*mod
 	return item, nil
 }
 
-func (r *ItemRepository) UpdateOne(ctx context.Context, itemId uint, updateData map[string]interface{}) (*models.Item, error) {
+func (r *ItemRepository) UpdateOne(ctx context.Context, itemId uuid.UUID, updateData map[string]interface{}) (*models.Item, error) {
 	item := &models.Item{}
 
 	updateRes := r.db.Model(item).Where("id = ?", itemId).Updates(updateData)

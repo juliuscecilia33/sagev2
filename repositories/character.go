@@ -3,6 +3,7 @@ package repositories
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/juliuscecilia33/sagev2/models"
 	"gorm.io/gorm"
 )
@@ -25,7 +26,7 @@ func (r *CharacterRepository) GetMany(ctx context.Context) ([]*models.Character,
 }
 
 
-func (r *CharacterRepository) GetOne(ctx context.Context, characterId uint) (*models.Character, error) {
+func (r *CharacterRepository) GetOne(ctx context.Context, characterId uuid.UUID) (*models.Character, error) {
 	character := &models.Character{}
 
 	res := r.db.Model(character).Where("id = ?", characterId).First(character)
@@ -47,7 +48,7 @@ func (r *CharacterRepository) CreateOne(ctx context.Context, character *models.C
 	return character, nil
 }
 
-func (r *CharacterRepository) UpdateOne(ctx context.Context, characterId uint, updateData map[string]interface{}) (*models.Character, error) {
+func (r *CharacterRepository) UpdateOne(ctx context.Context, characterId uuid.UUID, updateData map[string]interface{}) (*models.Character, error) {
 	character := &models.Character{}
 
 	updateRes := r.db.Model(character).Where("id = ?", characterId).Updates(updateData)
@@ -65,7 +66,7 @@ func (r *CharacterRepository) UpdateOne(ctx context.Context, characterId uint, u
 	return character, nil
 }
 
-func (r *CharacterRepository) DeleteOne(ctx context.Context, characterId uint) error {
+func (r *CharacterRepository) DeleteOne(ctx context.Context, characterId uuid.UUID) error {
 	res := r.db.Delete(&models.Character{}, characterId)
 
 	return res.Error

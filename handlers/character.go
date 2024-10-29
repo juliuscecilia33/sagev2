@@ -2,10 +2,10 @@ package handlers
 
 import (
 	"context"
-	"strconv"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 	"github.com/juliuscecilia33/sagev2/models"
 )
 
@@ -27,7 +27,7 @@ func (h *CharacterHandler) GetMany(ctx *fiber.Ctx) error {
 		})
 	}
 
-	return ctx.Status(fiber.StatusOK). JSON(&fiber.Map{
+	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{
 		"status": "success",
 		"message": "",
 		"data": characters,
@@ -35,12 +35,19 @@ func (h *CharacterHandler) GetMany(ctx *fiber.Ctx) error {
 }
 
 func (h *CharacterHandler) GetOne(ctx *fiber.Ctx) error {
-	characterId, _ := strconv.Atoi(ctx.Params("characterId"))
+	characterIdStr := ctx.Params("characterId")
+	characterId, err := uuid.Parse(characterIdStr)
+	if err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status": "fail",
+			"message": "Invalid character ID format",
+		})
+	}
 
 	context, cancel := context.WithTimeout(context.Background(), time.Duration(5*time.Second))
 	defer cancel()
 
-	character, err := h.repository.GetOne(context, uint(characterId))
+	character, err := h.repository.GetOne(context, characterId)
 
 	if err != nil {
 		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
@@ -79,7 +86,6 @@ func (h *CharacterHandler) CreateOne(ctx *fiber.Ctx) error {
 		})
 	}
 
-
 	return ctx.Status(fiber.StatusCreated).JSON(&fiber.Map{
 		"status": "success",
 		"message": "Character created",
@@ -88,7 +94,14 @@ func (h *CharacterHandler) CreateOne(ctx *fiber.Ctx) error {
 }
 
 func (h *CharacterHandler) UpdateOne(ctx *fiber.Ctx) error {
-	characterId, _ := strconv.Atoi(ctx.Params("characterId"))
+	characterIdStr := ctx.Params("characterId")
+	characterId, err := uuid.Parse(characterIdStr)
+	if err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status": "fail",
+			"message": "Invalid character ID format",
+		})
+	}
 
 	updateData := make(map[string]interface{})
 
@@ -103,7 +116,7 @@ func (h *CharacterHandler) UpdateOne(ctx *fiber.Ctx) error {
 		})
 	}
 	
-	character, err := h.repository.UpdateOne(context, uint(characterId), updateData)
+	character, err := h.repository.UpdateOne(context, characterId, updateData)
 
 	if err != nil {
 		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
@@ -112,22 +125,27 @@ func (h *CharacterHandler) UpdateOne(ctx *fiber.Ctx) error {
 		})
 	}
 
-
-	return ctx.Status(fiber.StatusCreated).JSON(&fiber.Map{
+	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{
 		"status": "success",
 		"message": "Character updated",
 		"data": character,
 	})
-
 }
 
-func (h* CharacterHandler) DeleteOne(ctx *fiber.Ctx) error {
-	characterId, _ := strconv.Atoi(ctx.Params("characterId"))
+func (h *CharacterHandler) DeleteOne(ctx *fiber.Ctx) error {
+	characterIdStr := ctx.Params("characterId")
+	characterId, err := uuid.Parse(characterIdStr)
+	if err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status": "fail",
+			"message": "Invalid character ID format",
+		})
+	}
 
 	context, cancel := context.WithTimeout(context.Background(), time.Duration(5*time.Second))
 	defer cancel()
 
-	err := h.repository.DeleteOne(context, uint(characterId))
+	err = h.repository.DeleteOne(context, characterId)
 
 	if err != nil {
 		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{

@@ -4,11 +4,12 @@ import (
 	"context"
 	"time"
 
+	"github.com/google/uuid"
 	utils "github.com/juliuscecilia33/sagev2/utils"
 )
 
 type Item struct {
-	ID              	uint      `json:"id" gorm:"primaryKey;autoIncrement"`
+	ID         uuid.UUID     `json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
 	Name            	string    `json:"name" gorm:"type:varchar(255)"`
 	Description     	string    `json:"description" gorm:"type:text"`
 	ItemType			string	  `json:"item_type" gorm:"type:text"`
@@ -20,8 +21,8 @@ type Item struct {
 
 type ItemRepository interface {
 	GetMany(ctx context.Context) ([]*Item, error)
-	GetOne(ctx context.Context, itemId uint) (*Item, error)
+	GetOne(ctx context.Context, itemId uuid.UUID) (*Item, error)
 	CreateOne(ctx context.Context, item *Item) (*Item, error)
-	UpdateOne(ctx context.Context, itemId uint, updateData map[string]interface{}) (*Item, error)
+	UpdateOne(ctx context.Context, itemId uuid.UUID, updateData map[string]interface{}) (*Item, error)
 }
 
