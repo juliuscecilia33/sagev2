@@ -1,5 +1,6 @@
 TODO:
 - Kid Table
+- Change all IDs to UUIDs
 - Quizzes Table
 - Rewards Table
 - Daily_Quests Table

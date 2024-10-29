@@ -148,7 +148,7 @@ func NewUserKidHandler(router fiber.Router, repository models.UserKidRepository)
 		repository: repository,
 	}
 
-	router.Get("/:parentId", handler.GetAllParentKids)
+	router.Get("/parentkids/:parentId", handler.GetAllParentKids)
 	router.Post("/", handler.CreateOne)
 	router.Get("/:userKidId", handler.GetOne)
 	router.Put("/:userKidId", handler.UpdateOne)

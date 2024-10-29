@@ -14,7 +14,7 @@ type UserKidRepository struct {
 func (r *UserKidRepository) GetAllParentKids(ctx context.Context, parentId uint) ([]*models.UserKid, error) {
 	kids := []*models.UserKid{}
 
-	res := r.db.Model(&models.UserKid{}).Where("parent_id = ?", parentId).Preload("User").Find(&kids)
+	res := r.db.Model(&models.UserKid{}).Where("parent_id = ?", parentId).Preload("User").Preload("Parent").Find(&kids)
 
 	if res.Error != nil {
 		return nil, res.Error
@@ -26,7 +26,11 @@ func (r *UserKidRepository) GetAllParentKids(ctx context.Context, parentId uint)
 func (r *UserKidRepository) GetOne(ctx context.Context, userKidId uint) (*models.UserKid, error) {
 	kid := &models.UserKid{}
 
-	res := r.db.Model(kid).Where("id = ?", userKidId).Preload("User").First(kid)
+	// Preload both User and Parent associations
+	res := r.db.Where("id = ?", userKidId).
+		Preload("User").
+		Preload("Parent").
+		First(kid)
 
 	if res.Error != nil {
 		return nil, res.Error
