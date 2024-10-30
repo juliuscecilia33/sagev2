@@ -1,7 +1,7 @@
 TODO:
 - Kid Table ✅
 - Change all IDs to UUIDs ✅
-- Quiz Table
+- Quiz Table ✅
 - Test Quiz routes
 - Reward Table
 - Daily_Quest Table
