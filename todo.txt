@@ -1,12 +1,12 @@
 TODO:
 - Kid Table ✅
 - Change all IDs to UUIDs ✅
-- Quizzes Table
-- Rewards Table
-- Daily_Quests Table
-- User_quizzes Table
-- User_rewards Table
-- User_Daily_quests table
+- Quiz Table
+- Reward Table
+- Daily_Quest Table
+- User_quiz Table
+- User_reward Table
+- User_Daily_quest table
 - User_character table
 - User_Character_Fruit Table
 - Enemy Table
