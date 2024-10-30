@@ -65,6 +65,13 @@ func (r *QuizRepository) UpdateOne(ctx context.Context, quizId uuid.UUID, update
 	return quiz, nil
 }
 
+func (r *QuizRepository) DeleteOne(ctx context.Context, quizId uuid.UUID) error {
+	res := r.db.Delete(&models.Quiz{}, quizId)
+
+	return res.Error
+}
+
+
 func NewQuizRepository(db *gorm.DB) models.QuizRepository {
 	return &QuizRepository{
 		db: db,

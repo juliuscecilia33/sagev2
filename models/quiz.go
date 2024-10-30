@@ -22,5 +22,6 @@ type QuizRepository interface {
 	GetOne(ctx context.Context, quizId uuid.UUID) (*Quiz, error)
 	CreateOne(ctx context.Context, quiz *Quiz) (*Quiz, error)
 	UpdateOne(ctx context.Context, quizId uuid.UUID, updateData map[string]interface{}) (*Quiz, error)
+	DeleteOne(ctx context.Context, quizId uuid.UUID) error
 }
 

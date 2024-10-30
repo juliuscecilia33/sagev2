@@ -26,6 +26,7 @@ func main() {
 	itemRepository := repositories.NewItemRepository(db)
 	authRepository := repositories.NewAuthRepository(db)
 	userKidRepository := repositories.NewUserKidRepository(db)
+	quizRepository := repositories.NewQuizRepository(db)
 
 	// Service
 	authService := services.NewAuthService(authRepository)
@@ -40,6 +41,7 @@ func main() {
 	handlers.NewCharacterHandler(privateRoutes.Group("/character"), characterRepository)
 	handlers.NewItemHandler(privateRoutes.Group("/item"), itemRepository)
 	handlers.NewUserKidHandler(privateRoutes.Group("/userkid"), userKidRepository)
+	handlers.NewQuizHandler(privateRoutes.Group("/quiz"), quizRepository)
 
 
 	app.Listen(fmt.Sprintf(":" + envConfig.ServerPort))
