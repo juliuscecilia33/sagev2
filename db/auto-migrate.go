@@ -12,6 +12,7 @@ func DBMigrator(db *gorm.DB) error {
 		&models.User{},
 		&models.UserKid{},
 		&models.Quiz{},
+		&models.Reward{},
 		// Add more models here
 	}
 
