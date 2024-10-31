@@ -3,8 +3,8 @@ TODO:
 - Change all IDs to UUIDs ✅
 - Quiz Table ✅
 - Test Quiz routes ✅
-- Reward Table 
-- Tasks Table
+- Reward Table ✅
+- Tasks Table 
 - Daily_Quest Table
 - User_quiz Table
 - User_reward Table

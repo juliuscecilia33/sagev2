@@ -10,7 +10,7 @@ import (
 
 type Reward struct {
 	ID 			uuid.UUID			`json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
-	Name		string      		`json:"name" gorm:"type:text"`
+	Name		string      		`json:"name" gorm:"type:text; not null"`
 	Description string				`json:"description" gorm:"type:text; not null"`
 	Type		string				`json:"type" gorm:"type:text; not null"`
 	Details		utils.NestedJSONMap	`json:"details" gorm:"type:jsonb"`
