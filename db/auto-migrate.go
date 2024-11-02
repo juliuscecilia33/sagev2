@@ -13,7 +13,7 @@ func DBMigrator(db *gorm.DB) error {
 		&models.UserKid{},
 		&models.Quiz{},
 		&models.Reward{},
-		// Add more models here
+		&models.Task{},
 	}
 
 	return db.AutoMigrate(models...)

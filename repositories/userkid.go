@@ -41,7 +41,7 @@ func (r *UserKidRepository) GetOne(ctx context.Context, userKidId uuid.UUID) (*m
 }
 
 func (r *UserKidRepository) CreateOne(ctx context.Context, kid *models.UserKid) (*models.UserKid, error) {
-		res := r.db.Create(kid)
+	res := r.db.Create(kid)
 	if res.Error != nil {
 		return nil, res.Error
 	}

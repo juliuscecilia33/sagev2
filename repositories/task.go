@@ -15,7 +15,7 @@ type TaskRepository struct {
 func (r *TaskRepository) GetMany(ctx context.Context) ([]*models.Task, error) {
 	tasks := []*models.Task{}
 
-	res := r.db.Model(&models.Task{}).Order("updated_at desc").Find(&tasks)
+	res := r.db.Model(&models.Task{}).Preload("Reward").Order("updated_at desc").Find(&tasks)
 
 	if res.Error != nil {
 		return nil, res.Error
@@ -27,7 +27,7 @@ func (r *TaskRepository) GetMany(ctx context.Context) ([]*models.Task, error) {
 func (r *TaskRepository) GetOne(ctx context.Context, taskId uuid.UUID) (*models.Task, error) {
 	task := &models.Task{}
 
-	res := r.db.Model(task).Where("id = ?", taskId).First(task)
+	res := r.db.Model(task).Preload("Reward").Where("id = ?", taskId).First(task)
 
 	if res.Error != nil {
 		return nil, res.Error
@@ -37,10 +37,15 @@ func (r *TaskRepository) GetOne(ctx context.Context, taskId uuid.UUID) (*models.
 }
 
 func (r *TaskRepository) CreateOne(ctx context.Context, task *models.Task) (*models.Task, error) {
-	res := r.db.Model(task).Create(task)
+	// res := r.db.Preload("Reward").Create(task)
+	res := r.db.Create(task)
 
 	if res.Error != nil {
 		return nil, res.Error
+	}
+
+	if err := r.db.Preload("Reward").First(task, task.ID).Error; err != nil {
+		return nil, err
 	}
 
 	return task, nil

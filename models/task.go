@@ -2,6 +2,7 @@ package models
 
 import (
 	"context"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/juliuscecilia33/sagev2/utils"
@@ -15,6 +16,8 @@ type Task struct {
 	Requirements		utils.NestedJSONMap	`json:"requirements" gorm:"type:jsonb; not null"`
 	Type				string				`json:"type" gorm:"type:text"`
 	Reward      		Reward          	`gorm:"foreignKey:RewardID;references:ID"`
+	CreatedAt 			time.Time			`json:"created_at"`
+	UpdatedAt 			time.Time			`json:"udpated_at"`
 }
 
 type TaskRepository interface {
