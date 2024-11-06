@@ -15,7 +15,7 @@ type DailyQuestRepository struct {
 func (r *DailyQuestRepository) GetMany(ctx context.Context) ([]*models.DailyQuest, error) {
 	dailyQuests := []*models.DailyQuest{}
 
-	res := r.db.Model(&models.DailyQuest{}).Preload("Reward").Order("updated_at desc").Find(&dailyQuests)
+	res := r.db.Model(&models.DailyQuest{}).Preload("Reward").Order("quest_date desc").Find(&dailyQuests)
 
 	if res.Error != nil {
 		return nil, res.Error

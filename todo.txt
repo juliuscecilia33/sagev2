@@ -5,7 +5,9 @@ TODO:
 - Test Quiz routes ✅
 - Reward Table ✅
 - Tasks Table ✅
-- Daily_Quest Table
+- Daily_Quest Table ✅
+- Add date to daily quest ✅
+- Add route to get daily quest by specific quest date ⏳
 - User_quiz Table
 - User_reward Table
 - User_Daily_quest table

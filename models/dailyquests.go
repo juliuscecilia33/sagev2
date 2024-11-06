@@ -15,10 +15,13 @@ type DailyQuest struct {
 	Description			string				`json:"description" gorm:"type:text"`
 	Requirements		utils.NestedJSONMap	`json:"requirements" gorm:"type:jsonb; not null"`
 	Type				string				`json:"type" gorm:"type:text"`
+	QuestDate			time.Time			`json:"quest_date" gorm:"type:date"`
 	Reward      		Reward          	`gorm:"foreignKey:RewardID;references:ID"`
 	CreatedAt 			time.Time			`json:"created_at"`
 	UpdatedAt 			time.Time			`json:"udpated_at"`
 }
+
+// QuestDate Example: "2024-11-05"
 
 type DailyQuestRepository interface {
 	GetMany(ctx context.Context) ([]*DailyQuest, error)
