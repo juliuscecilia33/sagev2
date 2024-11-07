@@ -2,6 +2,7 @@ package db
 
 import (
 	"github.com/juliuscecilia33/sagev2/models"
+	"github.com/juliuscecilia33/sagev2/models/bridges"
 	"gorm.io/gorm"
 )
 
@@ -15,6 +16,7 @@ func DBMigrator(db *gorm.DB) error {
 		&models.Reward{},
 		&models.Task{},
 		&models.DailyQuest{},
+		&bridges.UserQuiz{},
 	}
 
 	return db.AutoMigrate(models...)
