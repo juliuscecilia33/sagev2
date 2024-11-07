@@ -152,7 +152,7 @@ func (h *QuizHandler) DeleteOne(ctx *fiber.Ctx) error {
 		})
 	}
 
-	return ctx.SendStatus(fiber.StatusNoContent)
+	return ctx.SendStatus(fiber.StatusOK)
 }
 
 func NewQuizHandler(router fiber.Router, repository models.QuizRepository) {

@@ -153,7 +153,7 @@ func (h *DailyQuestHandler) DeleteOne(ctx *fiber.Ctx) error {
 		})
 	}
 
-	return ctx.SendStatus(fiber.StatusNoContent)
+	return ctx.SendStatus(fiber.StatusOK)
 }
 
 func (h *DailyQuestHandler) GetOne(ctx *fiber.Ctx) error {

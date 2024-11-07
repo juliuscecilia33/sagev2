@@ -7,8 +7,10 @@ import (
 	"github.com/juliuscecilia33/sagev2/config"
 	"github.com/juliuscecilia33/sagev2/db"
 	"github.com/juliuscecilia33/sagev2/handlers"
+	bridgesHandlers "github.com/juliuscecilia33/sagev2/handlers/bridges"
 	"github.com/juliuscecilia33/sagev2/middlewares"
 	"github.com/juliuscecilia33/sagev2/repositories"
+	bridgesRepositories "github.com/juliuscecilia33/sagev2/repositories/bridges"
 	"github.com/juliuscecilia33/sagev2/services"
 )
 
@@ -30,6 +32,7 @@ func main() {
 	rewardRepository := repositories.NewRewardRepository(db)
 	taskRepository := repositories.NewTaskRepository(db)
 	dailyQuestRepository := repositories.NewDailyQuestRepository(db)
+	userQuizRepository := bridgesRepositories.NewUserQuizRepository(db)
 
 	// Service
 	authService := services.NewAuthService(authRepository)
@@ -48,6 +51,7 @@ func main() {
 	handlers.NewRewardHandler(privateRoutes.Group("/reward"), rewardRepository)
 	handlers.NewTaskHandler(privateRoutes.Group("/task"), taskRepository)
 	handlers.NewDailyQuestHandler(privateRoutes.Group("/dailyquest"), dailyQuestRepository)
+	bridgesHandlers.NewUserQuizHandler(privateRoutes.Group("/user_quiz"), userQuizRepository)
 
 	app.Listen(fmt.Sprintf(":" + envConfig.ServerPort))
 }

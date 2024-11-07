@@ -37,7 +37,6 @@ func (r *TaskRepository) GetOne(ctx context.Context, taskId uuid.UUID) (*models.
 }
 
 func (r *TaskRepository) CreateOne(ctx context.Context, task *models.Task) (*models.Task, error) {
-	// res := r.db.Preload("Reward").Create(task)
 	res := r.db.Create(task)
 
 	if res.Error != nil {

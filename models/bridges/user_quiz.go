@@ -5,9 +5,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/juliuscecilia33/sagev2/utils"
 	"github.com/juliuscecilia33/sagev2/models" // import models
-
+	"github.com/juliuscecilia33/sagev2/utils"
 )
 
 type UserQuiz struct {
@@ -24,7 +23,7 @@ type UserQuiz struct {
 	Quiz          	models.Quiz       	  		`gorm:"foreignKey:QuizID;references:ID"`
 }
 
-type QuizRepository interface {
+type UserQuizRepository interface {
 	GetMany(ctx context.Context) ([]*UserQuiz, error)
 	GetOne(ctx context.Context, userQuizId uuid.UUID) (*UserQuiz, error)
 	CreateOne(ctx context.Context, userQuiz *UserQuiz) (*UserQuiz, error)

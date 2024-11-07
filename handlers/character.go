@@ -154,7 +154,7 @@ func (h *CharacterHandler) DeleteOne(ctx *fiber.Ctx) error {
 		})
 	}
 
-	return ctx.SendStatus(fiber.StatusNoContent)
+	return ctx.SendStatus(fiber.StatusOK)
 }
 
 func NewCharacterHandler(router fiber.Router, repository models.CharacterRepository) {

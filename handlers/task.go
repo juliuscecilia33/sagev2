@@ -152,7 +152,7 @@ func (h *TaskHandler) DeleteOne(ctx *fiber.Ctx) error {
 		})
 	}
 
-	return ctx.SendStatus(fiber.StatusNoContent)
+	return ctx.SendStatus(fiber.StatusOK)
 }
 
 func NewTaskHandler(router fiber.Router, repository models.TaskRepository) {

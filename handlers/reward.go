@@ -152,7 +152,7 @@ func (h *RewardHandler) DeleteOne(ctx *fiber.Ctx) error {
 		})
 	}
 
-	return ctx.SendStatus(fiber.StatusNoContent)
+	return ctx.SendStatus(fiber.StatusOK)
 }
 
 func NewRewardHandler(router fiber.Router, repository models.RewardRepository) {

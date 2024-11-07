@@ -2,10 +2,11 @@ package handlers
 
 import (
 	"context"
-	"github.com/gofiber/fiber/v2"
-	"github.com/juliuscecilia33/sagev2/models"
-	"github.com/google/uuid"
 	"time"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
+	"github.com/juliuscecilia33/sagev2/models"
 )
 
 type UserKidHandler struct {
@@ -160,7 +161,7 @@ func (h *UserKidHandler) DeleteOne(ctx *fiber.Ctx) error {
 		})
 	}
 
-	return ctx.SendStatus(fiber.StatusNoContent)
+	return ctx.SendStatus(fiber.StatusOK)
 }
 
 func NewUserKidHandler(router fiber.Router, repository models.UserKidRepository) {
