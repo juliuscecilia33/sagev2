@@ -38,30 +38,31 @@ func (h *DailyQuestHandler) GetMany(ctx *fiber.Ctx) error {
 	})
 }
 
-func (h *DailyQuestHandler) GetOne(ctx *fiber.Ctx) error {
+func (h *DailyQuestHandler) GetByDate(ctx *fiber.Ctx) error {
 	context, cancel := context.WithTimeout(context.Background(), time.Duration(5*time.Second))
 	defer cancel()
 
-	dailyQuestId, err := uuid.Parse(ctx.Params("dailyQuestId")) // Change to parse UUID
-	if err != nil {
+	questDate := ctx.Params("questDate")
+	if questDate == "" {
 		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
 			"status":  "fail",
-			"message": "invalid daily quest ID",
+			"message": "quest date is required",
 		})
 	}
 
-	dailyQuest, err := h.repository.GetOne(context, dailyQuestId) // Pass UUID
+	// Fetch quests by date from the repository
+	dailyQuests, err := h.repository.GetByDate(context, questDate)
 	if err != nil {
-		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
-			"status":  "fail",
+		return ctx.Status(fiber.StatusInternalServerError).JSON(&fiber.Map{
+			"status":  "error",
 			"message": err.Error(),
 		})
 	}
 
 	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{
 		"status":  "success",
-		"message": "retrieved daily quest",
-		"data":    dailyQuest,
+		"message": "retrieved daily quests for date",
+		"data":    dailyQuests,
 	})
 }
 
@@ -155,12 +156,40 @@ func (h *DailyQuestHandler) DeleteOne(ctx *fiber.Ctx) error {
 	return ctx.SendStatus(fiber.StatusNoContent)
 }
 
+func (h *DailyQuestHandler) GetOne(ctx *fiber.Ctx) error {
+	context, cancel := context.WithTimeout(context.Background(), time.Duration(5*time.Second))
+	defer cancel()
+
+	dailyQuestId, err := uuid.Parse(ctx.Params("dailyQuestId")) // Change to parse UUID
+	if err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status":  "fail",
+			"message": "invalid daily quest ID",
+		})
+	}
+
+	dailyQuest, err := h.repository.GetOne(context, dailyQuestId) // Pass UUID
+	if err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status":  "fail",
+			"message": err.Error(),
+		})
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{
+		"status":  "success",
+		"message": "retrieved daily quest",
+		"data":    dailyQuest,
+	})
+}
+
 func NewDailyQuestHandler(router fiber.Router, repository models.DailyQuestRepository) {
 	handler := &DailyQuestHandler{repository: repository}
 
 	router.Get("/", handler.GetMany)
 	router.Post("/", handler.CreateOne)
 	router.Get("/:dailyQuestId", handler.GetOne)
+	router.Get("/date/:questDate", handler.GetByDate)
 	router.Put("/:dailyQuestId", handler.UpdateOne)
 	router.Delete("/:dailyQuestId", handler.DeleteOne)
 }

@@ -74,6 +74,18 @@ func (r *DailyQuestRepository) DeleteOne(ctx context.Context, dailyQuestId uuid.
 	return res.Error
 }
 
+func (r* DailyQuestRepository) GetByDate(ctx context.Context, questDate string) ([]*models.DailyQuest, error) {
+	dailyQuests := []*models.DailyQuest{}
+
+	res := r.db.Model(&models.DailyQuest{}).Where("quest_date = ?", questDate).Preload("Reward").Find(&dailyQuests)
+
+	if res.Error != nil {
+		return nil, res.Error
+	}
+
+	return dailyQuests, nil
+}
+
 
 func NewDailyQuestRepository(db *gorm.DB) models.DailyQuestRepository {
 	return &DailyQuestRepository{
