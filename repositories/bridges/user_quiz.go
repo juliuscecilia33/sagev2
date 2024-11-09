@@ -12,6 +12,18 @@ type UserQuizRepository struct {
 	db *gorm.DB
 }
 
+func (r *UserQuizRepository) GetAllByUser(ctx context.Context, userId uuid.UUID) ([]*bridges.UserQuiz, error) {
+	specific_user_quizzes := []*bridges.UserQuiz{}
+
+	res := r.db.Model(&bridges.UserQuiz{}).Where("user_id = ?", userId).Preload("User").Find(&specific_user_quizzes)
+
+	if res.Error != nil {
+		return nil, res.Error
+	}
+
+	return specific_user_quizzes, nil
+}
+
 func (r *UserQuizRepository) GetMany(ctx context.Context) ([]*bridges.UserQuiz, error) {
 	user_quizzes := []*bridges.UserQuiz{}
 

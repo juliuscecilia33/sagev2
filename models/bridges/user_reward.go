@@ -20,7 +20,7 @@ type UserReward struct {
 }
 
 
-type UserRewardeRepository interface {
+type UserRewardRepository interface {
 	GetMany(ctx context.Context) ([]*UserReward, error)
 	GetOne(ctx context.Context, userRewardId uuid.UUID) (*UserReward, error)
 	CreateOne(ctx context.Context, userReward *UserReward) (*UserReward, error)

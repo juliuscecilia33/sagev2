@@ -26,6 +26,7 @@ type UserQuiz struct {
 type UserQuizRepository interface {
 	GetMany(ctx context.Context) ([]*UserQuiz, error)
 	GetOne(ctx context.Context, userQuizId uuid.UUID) (*UserQuiz, error)
+	GetAllByUser(ctx context.Context, userId uuid.UUID) ([]*UserQuiz, error)
 	CreateOne(ctx context.Context, userQuiz *UserQuiz) (*UserQuiz, error)
 	UpdateOne(ctx context.Context, userQuizId uuid.UUID, updateData map[string]interface{}) (*UserQuiz, error)
 	DeleteOne(ctx context.Context, userQuizId uuid.UUID) error

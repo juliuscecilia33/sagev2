@@ -74,7 +74,7 @@ func (r *UserRewardRepository) DeleteOne(ctx context.Context, userRewardId uuid.
 	return res.Error
 }
 
-func NewUserRewardRepository(db *gorm.DB) bridges.UserRewardeRepository {
+func NewUserRewardRepository(db *gorm.DB) bridges.UserRewardRepository {
 	return &UserRewardRepository{
 		db: db,
 	}

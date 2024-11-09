@@ -9,8 +9,12 @@ TODO:
 - Add date to daily quest ✅
 - Add route to get daily quest by specific quest date ✅
 - User_quiz Table ✅
-- User_reward Table
-- User_Daily_quest table
+- User_quiz - get quizzes by user id 
+- test route for get quizzes by user id
+- User_reward Table ✅
+- User_reward - get rewards by user id 
+- User_Daily_quest table 
+- User_daily_quest - get daily quests by user id 
 - User_character table
 - User_badges table
 - User_tasks table

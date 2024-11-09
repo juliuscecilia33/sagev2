@@ -10,7 +10,7 @@ import (
 )
 
 type UserRewardHandler struct {
-	repository bridges.UserRewardeRepository
+	repository bridges.UserRewardRepository
 }
 
 func (h *UserRewardHandler) getContext() (context.Context, context.CancelFunc) {
@@ -156,7 +156,7 @@ func (h *UserRewardHandler) DeleteOne(ctx *fiber.Ctx) error {
 	return ctx.SendStatus(fiber.StatusOK)
 }
 
-func NewUserRewardHandler(router fiber.Router, repository bridges.UserRewardeRepository) {
+func NewUserRewardHandler(router fiber.Router, repository bridges.UserRewardRepository) {
 	handler := &UserRewardHandler{repository: repository}
 
 	router.Get("/", handler.GetMany)
