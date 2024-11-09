@@ -8,7 +8,7 @@ TODO:
 - Daily_Quest Table ✅
 - Add date to daily quest ✅
 - Add route to get daily quest by specific quest date ✅
-- User_quiz Table ⏳
+- User_quiz Table ✅
 - User_reward Table
 - User_Daily_quest table
 - User_character table
