@@ -33,6 +33,7 @@ func main() {
 	taskRepository := repositories.NewTaskRepository(db)
 	dailyQuestRepository := repositories.NewDailyQuestRepository(db)
 	userQuizRepository := bridgesRepositories.NewUserQuizRepository(db)
+	userRewardRepository := bridgesRepositories.NewUserRewardRepository(db)
 
 	// Service
 	authService := services.NewAuthService(authRepository)
@@ -52,6 +53,7 @@ func main() {
 	handlers.NewTaskHandler(privateRoutes.Group("/task"), taskRepository)
 	handlers.NewDailyQuestHandler(privateRoutes.Group("/dailyquest"), dailyQuestRepository)
 	bridgesHandlers.NewUserQuizHandler(privateRoutes.Group("/user_quiz"), userQuizRepository)
+	bridgesHandlers.NewUserRewardHandler(privateRoutes.Group("/user_reward"), userRewardRepository)
 
 	app.Listen(fmt.Sprintf(":" + envConfig.ServerPort))
 }
