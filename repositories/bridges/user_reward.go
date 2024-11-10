@@ -12,6 +12,18 @@ type UserRewardRepository struct {
 	db *gorm.DB
 }
 
+func (r *UserRewardRepository) GetAllByUser(ctx context.Context, userId uuid.UUID) ([]*bridges.UserReward, error) {
+	specific_user_rewards := []*bridges.UserReward{}
+
+	res := r.db.Model(&bridges.UserReward{}).Where("user_id = ?", userId).Preload("User").Find(&specific_user_rewards)
+
+	if res.Error != nil {
+		return nil, res.Error
+	}
+
+	return specific_user_rewards, nil
+}
+
 func (r *UserRewardRepository) GetMany(ctx context.Context) ([]*bridges.UserReward, error) {
 	user_rewards := []*bridges.UserReward{}
 

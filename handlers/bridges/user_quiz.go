@@ -41,7 +41,7 @@ func (h *UserQuizHandler) GetAllByUser(ctx *fiber.Ctx) error {
 
 	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{
 		"status":  "success",
-		"message": "retrieved all quizzes for user",
+		"message": "retrieved all quizzes for specific user",
 		"data":    specific_user_quizzes,
 	})
 }
@@ -190,6 +190,7 @@ func NewUserQuizHandler(router fiber.Router, repository bridges.UserQuizReposito
 	router.Get("/", handler.GetMany)
 	router.Post("/", handler.CreateOne)
 	router.Get("/:userQuizId", handler.GetOne)
+	router.Get("/user/:userId", handler.GetAllByUser)
 	router.Put("/:userQuizId", handler.UpdateOne)
 	router.Delete("/:userQuizId", handler.DeleteOne)
 }

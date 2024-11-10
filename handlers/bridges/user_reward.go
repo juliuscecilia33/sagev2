@@ -17,6 +17,35 @@ func (h *UserRewardHandler) getContext() (context.Context, context.CancelFunc) {
 	return context.WithTimeout(context.Background(), 5*time.Second)
 }
 
+func (h *UserRewardHandler) GetAllByUser(ctx *fiber.Ctx) error {
+	ctxWithTimeout, cancel := h.getContext()
+	defer cancel()
+
+	userId := ctx.Params("userId")
+	// Parse the UUID from the string
+	parsedUserID, err := uuid.Parse(userId)
+	if err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status":  "fail",
+			"message": "invalid user ID",
+		})
+	}
+
+	specific_user_rewards, err := h.repository.GetAllByUser(ctxWithTimeout, parsedUserID)
+	if err != nil {
+		return ctx.Status(fiber.StatusBadGateway).JSON(&fiber.Map{
+			"status":  "fail",
+			"message": err.Error(),
+		})
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{
+		"status":  "success",
+		"message": "retrieved all rewards for specific user",
+		"data":    specific_user_rewards,
+	})
+}
+
 func (h *UserRewardHandler) GetMany(ctx *fiber.Ctx) error {
 	context, cancel := context.WithTimeout(context.Background(), time.Duration(5*time.Second))
 	defer cancel()
@@ -162,6 +191,7 @@ func NewUserRewardHandler(router fiber.Router, repository bridges.UserRewardRepo
 	router.Get("/", handler.GetMany)
 	router.Post("/", handler.CreateOne)
 	router.Get("/:userRewardId", handler.GetOne)
+	router.Get("/user/:userId", handler.GetAllByUser)
 	router.Put("/:userRewardId", handler.UpdateOne)
 	router.Delete("/:userRewardId", handler.DeleteOne)
 }

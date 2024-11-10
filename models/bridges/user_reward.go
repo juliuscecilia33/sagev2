@@ -22,6 +22,7 @@ type UserReward struct {
 
 type UserRewardRepository interface {
 	GetMany(ctx context.Context) ([]*UserReward, error)
+	GetAllByUser(ctx context.Context, userId uuid.UUID) ([]*UserReward, error)
 	GetOne(ctx context.Context, userRewardId uuid.UUID) (*UserReward, error)
 	CreateOne(ctx context.Context, userReward *UserReward) (*UserReward, error)
 	UpdateOne(ctx context.Context, userRewardId uuid.UUID, updateData map[string]interface{}) (*UserReward, error)

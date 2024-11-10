@@ -24,6 +24,7 @@ type UserDailyQuest struct {
 type UserDailyQuestRepository interface {
 	GetMany(ctx context.Context) ([]*UserDailyQuest, error)
 	GetOne(ctx context.Context, userDailyQuestId uuid.UUID) (*UserDailyQuest, error)
+	GetAllByUser(ctx context.Context, userId uuid.UUID) ([]*UserDailyQuest, error)
 	CreateOne(ctx context.Context, UserDailyQuest *UserDailyQuest) (*UserDailyQuest, error)
 	UpdateOne(ctx context.Context, userDailyQuestId uuid.UUID, updateData map[string]interface{}) (*UserDailyQuest, error)
 	DeleteOne(ctx context.Context, userDailyQuestId uuid.UUID) error

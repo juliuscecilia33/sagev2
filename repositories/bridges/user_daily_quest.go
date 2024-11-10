@@ -12,6 +12,18 @@ type UserDailyQuestRepository struct {
 	db *gorm.DB
 }
 
+func (r *UserDailyQuestRepository) GetAllByUser(ctx context.Context, userId uuid.UUID) ([]*bridges.UserDailyQuest, error) {
+	specific_user_daily_quests := []*bridges.UserDailyQuest{}
+
+	res := r.db.Model(&bridges.UserDailyQuest{}).Where("user_id = ?", userId).Preload("User").Find(&specific_user_daily_quests)
+
+	if res.Error != nil {
+		return nil, res.Error
+	}
+
+	return specific_user_daily_quests, nil
+}
+
 func (r *UserDailyQuestRepository) GetMany(ctx context.Context) ([]*bridges.UserDailyQuest, error) {
 	user_daily_quests := []*bridges.UserDailyQuest{}
 
