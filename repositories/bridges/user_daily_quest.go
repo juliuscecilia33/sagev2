@@ -15,7 +15,7 @@ type UserDailyQuestRepository struct {
 func (r *UserDailyQuestRepository) GetAllByUser(ctx context.Context, userId uuid.UUID) ([]*bridges.UserDailyQuest, error) {
 	specific_user_daily_quests := []*bridges.UserDailyQuest{}
 
-	res := r.db.Model(&bridges.UserDailyQuest{}).Where("user_id = ?", userId).Preload("User").Find(&specific_user_daily_quests)
+	res := r.db.Model(&bridges.UserDailyQuest{}).Where("user_id = ?", userId).Preload("User").Preload("DailyQuest").Find(&specific_user_daily_quests)
 
 	if res.Error != nil {
 		return nil, res.Error
@@ -55,7 +55,7 @@ func (r *UserDailyQuestRepository) CreateOne(ctx context.Context, user_daily_que
 		return nil, res.Error
 	}
 
-	if err := r.db.Preload("User").Preload("DailyQuest").First(user_daily_quest, user_daily_quest.ID).Error; err != nil {
+	if err := r.db.Preload("User").Preload("DailyQuest").Preload("DailyQuest.Reward").First(user_daily_quest, user_daily_quest.ID).Error; err != nil {
 		return nil, err
 	}
 

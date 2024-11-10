@@ -161,7 +161,7 @@ func (h *UserDailyQuestHandler) UpdateOne(ctx *fiber.Ctx) error {
 }
 
 func (h *UserDailyQuestHandler) DeleteOne(ctx *fiber.Ctx) error {
-	userDailyQuestId := ctx.Params("userQuizId")
+	userDailyQuestId := ctx.Params("userDailyQuestId")
 	// Parse the UUID from the string
 	parsedUserDailyQuestID, err := uuid.Parse(userDailyQuestId)
 	if err != nil {

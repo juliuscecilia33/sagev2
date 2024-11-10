@@ -15,7 +15,7 @@ type UserRewardRepository struct {
 func (r *UserRewardRepository) GetAllByUser(ctx context.Context, userId uuid.UUID) ([]*bridges.UserReward, error) {
 	specific_user_rewards := []*bridges.UserReward{}
 
-	res := r.db.Model(&bridges.UserReward{}).Where("user_id = ?", userId).Preload("User").Find(&specific_user_rewards)
+	res := r.db.Model(&bridges.UserReward{}).Where("user_id = ?", userId).Preload("User").Preload("Reward").Find(&specific_user_rewards)
 
 	if res.Error != nil {
 		return nil, res.Error

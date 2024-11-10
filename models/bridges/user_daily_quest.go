@@ -17,7 +17,7 @@ type UserDailyQuest struct {
 	CreatedAt   	time.Time			`json:"created_at"`
 	UpdatedAt   	time.Time			`json:"udpated_at"`
 	User            models.User         `gorm:"foreignKey:UserID;references:ID"`
-	DailyQuest      models.DailyQuest    `gorm:"foreignKey:RewardID;references:ID"`
+	DailyQuest      models.DailyQuest    `gorm:"foreignKey:DailyQuestID;references:ID"`
 }
 
 

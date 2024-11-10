@@ -15,7 +15,7 @@ type UserQuizRepository struct {
 func (r *UserQuizRepository) GetAllByUser(ctx context.Context, userId uuid.UUID) ([]*bridges.UserQuiz, error) {
 	specific_user_quizzes := []*bridges.UserQuiz{}
 
-	res := r.db.Model(&bridges.UserQuiz{}).Where("user_id = ?", userId).Preload("User").Find(&specific_user_quizzes)
+	res := r.db.Model(&bridges.UserQuiz{}).Where("user_id = ?", userId).Preload("User").Preload("Quiz").Find(&specific_user_quizzes)
 
 	if res.Error != nil {
 		return nil, res.Error
