@@ -12,7 +12,7 @@ import (
 type UserCharacter struct {
 	ID 				uuid.UUID     		`json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
 	UserID          uuid.UUID     		`json:"userId" gorm:"type:uuid;not null;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;references:ID"`
-	CharcterID		uuid.UUID			`json:"characterId" gorm:"type:uuid;not null;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;references:ID"`
+	CharacterID		uuid.UUID			`json:"characterId" gorm:"type:uuid;not null;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;references:ID"`
 	ExperiencePoints	int         	`json:"experience_points" gorm:"type:int"`
 	EquippedItems	utils.NestedJSONMap `json:"equipped_items" gorm:"type:jsonb"`
 	Stats			utils.NestedJSONMap `json:"stats" gorm:"type:jsonb"`
