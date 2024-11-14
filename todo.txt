@@ -15,8 +15,7 @@ TODO:
 - User_reward - get rewards by user id ✅
 - User_Daily_quest table ✅
 - User_daily_quest - get daily quests by user id ✅
-- User_character table - test out routes
-- User_badges table
+- User_character table - test out routes ✅
 - User_tasks table
 - User_Character_Fruit Table
 - Enemy Table
