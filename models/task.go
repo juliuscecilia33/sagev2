@@ -17,7 +17,7 @@ type Task struct {
 	Type				string				`json:"type" gorm:"type:text"`
 	Reward      		Reward          	`gorm:"foreignKey:RewardID;references:ID"`
 	CreatedAt 			time.Time			`json:"created_at"`
-	UpdatedAt 			time.Time			`json:"udpated_at"`
+	UpdatedAt 			time.Time			`json:"updated_at"`
 }
 
 type TaskRepository interface {

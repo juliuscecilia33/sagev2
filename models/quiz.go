@@ -14,7 +14,7 @@ type Quiz struct {
 	Description string				`json:"description" gorm:"type:text"`
 	Content		utils.NestedJSONMap	`json:"content" gorm:"type:jsonb"`
 	CreatedAt   time.Time			`json:"created_at"`
-	UpdatedAt   time.Time			`json:"udpated_at"`
+	UpdatedAt   time.Time			`json:"updated_at"`
 }
 
 type QuizRepository interface {

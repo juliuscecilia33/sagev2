@@ -13,8 +13,9 @@ type UserTask struct {
 	UserID          uuid.UUID     		`json:"userId" gorm:"type:uuid;not null;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;references:ID"`
 	TaskID			uuid.UUID     		`json:"taskId" gorm:"type:uuid;not null;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;references:ID"`
 	Status 			string 				`json:"status" gorm:"type:varchar(255);default:'Not started'"`
+	CompletedAt		time.Time			`json:"completed_at" gorm:"type:timestamp"`
 	CreatedAt   	time.Time			`json:"created_at"`
-	UpdatedAt   	time.Time			`json:"udpated_at"`
+	UpdatedAt   	time.Time			`json:"updated_at"`
 	User            models.User         `gorm:"foreignKey:UserID;references:ID"`
 	Task     		models.Task    		`gorm:"foreignKey:TaskID;references:ID"`
 }

@@ -15,7 +15,7 @@ type Reward struct {
 	Type		string				`json:"type" gorm:"type:text; not null"`
 	Details		utils.NestedJSONMap	`json:"details" gorm:"type:jsonb"`
 	CreatedAt 	time.Time			`json:"created_at"`
-	UpdatedAt 	time.Time			`json:"udpated_at"`
+	UpdatedAt 	time.Time			`json:"updated_at"`
 }
 
 type RewardRepository interface {

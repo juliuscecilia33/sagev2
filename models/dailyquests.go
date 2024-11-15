@@ -18,7 +18,7 @@ type DailyQuest struct {
 	QuestDate			string				`json:"quest_date" gorm:"type:text"`
 	Reward      		Reward          	`gorm:"foreignKey:RewardID;references:ID"`
 	CreatedAt 			time.Time			`json:"created_at"`
-	UpdatedAt 			time.Time			`json:"udpated_at"`
+	UpdatedAt 			time.Time			`json:"updated_at"`
 }
 
 // QuestDate Example: "2024-11-05"

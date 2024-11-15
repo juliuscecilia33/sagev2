@@ -22,7 +22,7 @@ type User struct {
 	Role UserRole `json:"role" gorm:"text;default:player"`
 	Password string `json:"-"` // Do not compute the password in json
 	CreatedAt time.Time	`json:"created_at"`
-	UpdatedAt time.Time	`json:"udpated_at"`
+	UpdatedAt time.Time	`json:"updated_at"`
 }
 
 // // BeforeCreate hook to auto-generate UUID for ID

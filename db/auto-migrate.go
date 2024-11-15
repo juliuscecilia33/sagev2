@@ -20,6 +20,7 @@ func DBMigrator(db *gorm.DB) error {
 		&bridges.UserReward{},
 		&bridges.UserDailyQuest{},
 		&bridges.UserCharacter{},
+		&bridges.UserTask{},
 	}
 
 	return db.AutoMigrate(models...)

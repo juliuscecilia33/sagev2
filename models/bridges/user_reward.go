@@ -12,9 +12,9 @@ type UserReward struct {
 	ID 				uuid.UUID     		`json:"id" gorm:"type:uuid;primaryKey;default:uuid_generate_v4()"`
 	UserID          uuid.UUID     		`json:"userId" gorm:"type:uuid;not null;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;references:ID"`
 	RewardID		uuid.UUID			`json:"rewardId" gorm:"type:uuid;not null;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;references:ID"`
-	EarnedAt   		time.Time           `json:"started_at" gorm:"type:timestamp"`
+	EarnedAt   		time.Time           `json:"earned_at" gorm:"type:timestamp"`
 	CreatedAt   	time.Time			`json:"created_at"`
-	UpdatedAt   	time.Time			`json:"udpated_at"`
+	UpdatedAt   	time.Time			`json:"updated_at"`
 	User            models.User         `gorm:"foreignKey:UserID;references:ID"`
 	Reward      	models.Reward       `gorm:"foreignKey:RewardID;references:ID"`
 }

@@ -17,7 +17,7 @@ type UserCharacter struct {
 	EquippedItems	utils.NestedJSONMap `json:"equipped_items" gorm:"type:jsonb"`
 	Stats			utils.NestedJSONMap `json:"stats" gorm:"type:jsonb"`
 	CreatedAt   	time.Time			`json:"created_at"`
-	UpdatedAt   	time.Time			`json:"udpated_at"`
+	UpdatedAt   	time.Time			`json:"updated_at"`
 	User            models.User         `gorm:"foreignKey:UserID;references:ID"`
 	Character     	models.Character    `gorm:"foreignKey:CharacterID;references:ID"`
 }

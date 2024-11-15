@@ -16,7 +16,7 @@ type Item struct {
 	UnlockConditions	utils.JSONMap `json:"unlock_conditions" gorm:"type:jsonb"`
 	LevelImages			utils.JSONMap `json:"level_images" gorm:"type:jsonb"`
 	CreatedAt       	time.Time	`json:"created_at"`
-	UpdatedAt       	time.Time	`json:"udpated_at"`
+	UpdatedAt       	time.Time	`json:"updated_at"`
 }
 
 type ItemRepository interface {
