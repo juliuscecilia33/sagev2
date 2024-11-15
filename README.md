@@ -1,5 +1,8 @@
 SageV2 is a Go-based application that uses Docker, GORM, and PostgreSQL for building a scalable API. This guide provides instructions for setting up the development environment using Docker Compose.
 
+<img width="1333" alt="image" src="https://github.com/user-attachments/assets/9dc4d943-713f-4f4d-b727-5ca9b8a76c72">
+
+
 # Prerequisites
 
 ### Make sure you have the following installed:
