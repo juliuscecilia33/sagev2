@@ -17,13 +17,15 @@ func (h *UserCharacterFruitHandler) getContext() (context.Context, context.Cance
 	return context.WithTimeout(context.Background(), 5*time.Second)
 }
 
-func (h *UserCharacterFruitHandler) GetAllByUser(ctx *fiber.Ctx) error {
+func (h *UserCharacterFruitHandler) GetAllByUserCharacter(ctx *fiber.Ctx) error {
 	ctxWithTimeout, cancel := h.getContext()
 	defer cancel()
 
 	userId := ctx.Params("userId")
+	characterId := ctx.Params("characterId")
 	// Parse the UUID from the string
 	parsedUserID, err := uuid.Parse(userId)
+	parsedCharacterId, character_err := uuid.Parse(characterId)
 	if err != nil {
 		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
 			"status":  "fail",
@@ -31,7 +33,14 @@ func (h *UserCharacterFruitHandler) GetAllByUser(ctx *fiber.Ctx) error {
 		})
 	}
 
-	specific_user_character_fruits, err := h.repository.GetAllByUser(ctxWithTimeout, parsedUserID)
+	if character_err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status":  "fail",
+			"message": "invalid character ID",
+		})
+	}
+
+	specific_user_character_fruits, err := h.repository.GetAllByUserCharacter(ctxWithTimeout, parsedUserID, parsedCharacterId)
 	if err != nil {
 		return ctx.Status(fiber.StatusBadGateway).JSON(&fiber.Map{
 			"status":  "fail",
@@ -190,7 +199,7 @@ func NewUserCharacterFruitHandler(router fiber.Router, repository bridges.UserCh
 	router.Get("/", handler.GetMany)
 	router.Post("/", handler.CreateOne)
 	router.Get("/:userCharacterFruitId", handler.GetOne)
-	router.Get("/user/:userId", handler.GetAllByUser)
+	router.Get("/user/:userId/character/:characterId", handler.GetAllByUserCharacter)
 	router.Put("/:userCharacterFruitId", handler.UpdateOne)
 	router.Delete("/:userCharacterFruitId", handler.DeleteOne)
 }

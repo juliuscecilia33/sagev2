@@ -12,10 +12,10 @@ type UserCharacterFruitRepository struct {
 	db *gorm.DB
 }
 
-func (r *UserCharacterFruitRepository) GetAllByUser(ctx context.Context, userId uuid.UUID) ([]*bridges.UserCharacterFruit, error) {
+func (r *UserCharacterFruitRepository) GetAllByUserCharacter(ctx context.Context, userId uuid.UUID, characterId uuid.UUID) ([]*bridges.UserCharacterFruit, error) {
 	specific_user_character_fruits := []*bridges.UserCharacterFruit{}
 
-	res := r.db.Model(&bridges.UserCharacterFruit{}).Where("user_id = ?", userId).Preload("User").Preload("Character").Preload("UserCharacter").Find(&specific_user_character_fruits)
+	res := r.db.Model(&bridges.UserCharacterFruit{}).Where("user_id = ?", userId).Where("character_id = ?", characterId).Preload("User").Preload("Character").Preload("UserCharacter").Find(&specific_user_character_fruits)
 
 	if res.Error != nil {
 		return nil, res.Error
@@ -55,7 +55,7 @@ func (r *UserCharacterFruitRepository) CreateOne(ctx context.Context, user_chara
 		return nil, res.Error
 	}
 
-	if err := r.db.Preload("User").Preload("Character").Preload("UserCharacterFruit").First(user_character_fruit, user_character_fruit.ID).Error; err != nil {
+	if err := r.db.Preload("User").Preload("Character").Preload("UserCharacter").First(user_character_fruit, user_character_fruit.ID).Error; err != nil {
 		return nil, err
 	}
 
