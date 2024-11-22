@@ -2,6 +2,9 @@ SageV2 is a Go-based application that uses Docker, GORM, and PostgreSQL for buil
 
 <img width="1333" alt="image" src="https://github.com/user-attachments/assets/9dc4d943-713f-4f4d-b727-5ca9b8a76c72">
 
+![example1](https://github.com/user-attachments/assets/c76f8015-5828-4d43-ba16-a546d9efeb83)
+
+
 
 # Prerequisites
 
